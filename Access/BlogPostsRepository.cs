@@ -6,6 +6,8 @@ using System.Data;
 
 using Dapper;
 using website_webapi.Models;
+using System.Linq;
+using Npgsql;
 
 namespace website_webapi.Repositories
 {
@@ -17,7 +19,7 @@ namespace website_webapi.Repositories
         {
             get
             {
-                return new SqlConnection(this.Configuration.GetConnectionString("DefaultConnectionString"));
+                return new NpgsqlConnection(this.Configuration.GetConnectionString("DefaultConnection"));
             }
         }
 
@@ -27,9 +29,12 @@ namespace website_webapi.Repositories
         }
         public async Task<IEnumerable<BlogPost>> ReadAllBlogPosts()
         {
-            using (IDbConnection db = new SqlConnection(this.Configuration["Data:DefaultConnection:ConnectionString"]))
+            System.Diagnostics.Debug.WriteLine("connection: " + this.Connection);
+            
+            using (IDbConnection db = this.Connection)
             {
-                return await db.QueryAsync<BlogPost>("Select * From blogposts");                
+                var result = await db.QueryAsync<BlogPost>("SELECT * FROM blogposts");
+                return result.ToList();                
             }
         }
     }

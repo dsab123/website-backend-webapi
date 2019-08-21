@@ -1,12 +1,24 @@
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using website_webapi.Models;
+using website_webapi.Repositories;
 
 namespace website_webapi.Logic
 {
     public class BlogPostsLogic 
     {
-        public BlogPost GetBlogPosts() {
-            return new BlogPost(1);
+        IBlogPostsRepository BlogPostsRepository;
+
+        public BlogPostsLogic(IBlogPostsRepository blogPostsRepository) {
+            this.BlogPostsRepository = blogPostsRepository;
+        }
+
+        public async Task<BlogPost> GetBlogPost(int id) {
+            return await Task.FromResult(new BlogPost(id));
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetAllBlogPosts() {
+            return await this.BlogPostsRepository.ReadAllBlogPosts();
         }
     }
 }

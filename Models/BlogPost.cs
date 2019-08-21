@@ -33,5 +33,9 @@ namespace website_webapi.Models
             Content = content;
             RelatedPosts = new List<BlogPost>();
         }
+
+        public BlogPost()
+        {
+        }
     }
 }

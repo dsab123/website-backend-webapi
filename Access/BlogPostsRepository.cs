@@ -27,15 +27,28 @@ namespace website_webapi.Repositories
         {
             this.Configuration = config;
         }
+        
         public async Task<IEnumerable<BlogPost>> ReadAllBlogPosts()
         {
-            System.Diagnostics.Debug.WriteLine("connection: " + this.Connection);
-            
             using (IDbConnection db = this.Connection)
             {
-                var result = await db.QueryAsync<BlogPost>("SELECT * FROM blogposts");
-                return result.ToList();                
+                var result = await db.QueryAsync<BlogPost>(
+                    "SELECT * FROM blogposts"
+                    );
+                return result.ToList();
             }
+        }
+
+        public async Task<BlogPost> ReadBlogPost(int id) 
+        {
+            using (IDbConnection db = this.Connection)
+                {
+                    var result = await db.QueryAsync<BlogPost>(
+                        @"SELECT * FROM blogposts
+                        WHERE id = @id", new { id }
+                        );
+                    return result.FirstOrDefault(); 
+                }
         }
     }
 }

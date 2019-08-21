@@ -21,7 +21,7 @@ namespace website_webapi.Controllers
             this.blogPostsRepository = blogPostsRepository;
         }
 
-        // GET api/values
+        // GET api/blogposts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BlogPost>>> GetAllBlogPosts()
         {
@@ -35,14 +35,7 @@ namespace website_webapi.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogPost>> GetBlogPost(int id) {
-            return  await (new BlogPostsLogic(this.blogPostsRepository)).GetBlogPost(id);
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
+            return await (new BlogPostsLogic(this.blogPostsRepository)).GetBlogPost(id);
         }
 
         // POST api/values

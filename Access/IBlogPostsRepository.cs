@@ -9,5 +9,6 @@ namespace website_webapi.Repositories
     {
         Task<IEnumerable<BlogPost>> ReadAllBlogPosts();
 
+        Task<BlogPost> ReadBlogPost(int id);
     }
 }

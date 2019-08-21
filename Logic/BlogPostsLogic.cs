@@ -14,7 +14,7 @@ namespace website_webapi.Logic
         }
 
         public async Task<BlogPost> GetBlogPost(int id) {
-            return await Task.FromResult(new BlogPost(id));
+            return await this.BlogPostsRepository.ReadBlogPost(id);
         }
 
         public async Task<IEnumerable<BlogPost>> GetAllBlogPosts() {
